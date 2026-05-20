@@ -510,7 +510,7 @@
       "spec_version": "2.1",
       "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
       "created": "2024-10-30T18:00:00.000Z",
-      "modified": "2024-10-30T18:00:00.000Z",
+      "modified": "2026-05-20T21:30:00.000Z",
       "revoked": false,
       "confidence": 0,
       "lang": "en",
@@ -518,7 +518,7 @@
       "description": "Process causing computer to dump hashes with lsass",
       "analytic": {
         "type": "Sigma Rule - base64 encoded YAML file",
-        "rule": "dGl0bGU6IENvbXB1dGVyIGdlbmVyYXRpbmcgaGFzaGVzCmlkOiAxQzJCMEYzMS02NEYzLTRCNEEtQTBGNi1DQ0ZERkYyRTk4Q0QKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IFByb2Nlc3MgY2F1c2luZyBjb21wdXRlciB0byBkdW1wIGhhc2hlcyB3aXRoIGxzYXNzCnJlZmVyZW5jZXM6IGh0dHBzOi8vYXR0YWNrLm1pdHJlLm9yZy90ZWNobmlxdWVzL1QxMDAzLzAwMS8KYXV0aG9yOiBPQ0EKZGF0ZTogMjAyNC8xMC8yMQptb2RpZmllZDogMjAyNC8xMC8yMQp0YWdzOgogICAgLSBhdHRhY2sudDEwMzMuMDAxCiAgICAtIGF0dGFjay5leGVjdXRpb24KbG9nc291cmNlOgogICAgY2F0ZWdvcnk6IHByb2Nlc3NfY3JlYXRpb24KICAgIHByb2R1Y3Q6IHdpbmRvd3MKZGV0ZWN0aW9uOgogICAgc2VsZWN0aW9uXzE6CiAgICAgICAgZXZlbnQuY29kZTogOAogICAgc2VsZWN0aW9uXzI6CiAgICAgICAgd2lubG9nLmV2ZW50X2RhdGEuVGFyZ2V0SW1hZ2U6ICcqbHNhc3MqJwogICAgY29uZGl0aW9uOiBzZWxlY3Rpb25fMSBhbmQgc2VsZWN0aW9uXzIKZmFsc2Vwb3NpdGl2ZXM6CiAgICAtIExlZ2l0aW1hdGUgbHNhc3MgdXNhZ2UKbGV2ZWw6IGhpZ2g="
+        "rule": "dGl0bGU6IENvbXB1dGVyIGdlbmVyYXRpbmcgaGFzaGVzCmlkOiA5OTUyOTA5Mi0zY2U2LTQ5M2MtODZmYS04N2ZhMDMyZmNhODYKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IFByb2Nlc3MgY2F1c2luZyBjb21wdXRlciB0byBkdW1wIGhhc2hlcyB3aXRoIGxzYXNzCnJlZmVyZW5jZXM6CiAgICAtIGh0dHBzOi8vYXR0YWNrLm1pdHJlLm9yZy90ZWNobmlxdWVzL1QxMDAzLzAwMS8KYXV0aG9yOiBPQ0EKZGF0ZTogMjAyNC8xMC8yMQptb2RpZmllZDogMjAyNi8wNS8yMAp0YWdzOgogICAgLSBhdHRhY2sudDEwMDMuMDAxCiAgICAtIGF0dGFjay5jcmVkZW50aWFsX2FjY2Vzcwpsb2dzb3VyY2U6CiAgICBjYXRlZ29yeTogQ3JlYXRlUmVtb3RlVGhyZWFkCiAgICBwcm9kdWN0OiBzeXNtb24KZGV0ZWN0aW9uOgogICAgc2VsZWN0aW9uXzE6CiAgICAgICAgRXZlbnRDb2RlOiA4CiAgICBzZWxlY3Rpb25fMjoKICAgICAgICBUYXJnZXRJbWFnZTogJypsc2FzcyonCiAgICBjb25kaXRpb246IHNlbGVjdGlvbl8xIGFuZCBzZWxlY3Rpb25fMgpmYWxzZXBvc2l0aXZlczoKICAgIC0gTGVnaXRpbWF0ZSBsc2FzcyB1c2FnZQpsZXZlbDogaGlnaAo="
       },
       "extensions": {
         "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
