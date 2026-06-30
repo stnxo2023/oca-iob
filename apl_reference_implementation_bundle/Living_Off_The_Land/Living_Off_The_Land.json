@@ -250,53 +250,50 @@
       ]
     },
     {
-      "id": "attack-pattern--6495ae23-3ab4-43c5-a94f-5638a2c31fd2",
+      "id": "attack-pattern--75b9a4d2-d4e2-4ca1-9aab-1badd9e05fd0",
       "type": "attack-pattern",
       "spec_version": "2.1",
+      "created": "2026-04-14T22:54:03.796Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "created": "2020-01-28T17:05:14.707Z",
-      "modified": "2024-04-16T12:40:58.536Z",
       "revoked": false,
-      "confidence": 0,
-      "lang": "en",
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1070/001",
-          "external_id": "T1070.001"
+          "url": "https://attack.mitre.org/techniques/T1685/005",
+          "external_id": "T1685.005"
         },
         {
           "source_name": "disable_win_evt_logging",
           "description": "Heiligenstein, L. (n.d.). REP-25: Disable Windows Event Logging. Retrieved April 7, 2022.",
           "url": "https://ptylu.github.io/content/report/report.html?report=25"
-        },
-        {
-          "source_name": "Microsoft Clear-EventLog",
-          "description": "Microsoft. (n.d.). Clear-EventLog. Retrieved July 2, 2018.",
-          "url": "https://docs.microsoft.com/powershell/module/microsoft.powershell.management/clear-eventlog"
-        },
-        {
-          "source_name": "Microsoft EventLog.Clear",
-          "description": "Microsoft. (n.d.). EventLog.Clear Method (). Retrieved July 2, 2018.",
-          "url": "https://msdn.microsoft.com/library/system.diagnostics.eventlog.clear.aspx"
-        },
-        {
-          "source_name": "Microsoft wevtutil Oct 2017",
-          "description": "Plett, C. et al.. (2017, October 16). wevtutil. Retrieved July 2, 2018.",
-          "url": "https://docs.microsoft.com/windows-server/administration/windows-commands/wevtutil"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
+      "modified": "2026-05-12T15:12:00.642Z",
       "name": "Clear Windows Event Logs",
-      "description": "Adversaries may clear Windows Event Logs to hide the activity of an intrusion. Windows Event Logs are a record of a computer's alerts and notifications. There are three system-defined sources of events: System, Application, and Security, with five event types: Error, Warning, Information, Success Audit, and Failure Audit.\n\n\nWith administrator privileges, the event logs can be cleared with the following utility commands:\n\n* <code>wevtutil cl system</code>\n* <code>wevtutil cl application</code>\n* <code>wevtutil cl security</code>\n\nThese logs may also be cleared through other mechanisms, such as the event viewer GUI or [PowerShell](https://attack.mitre.org/techniques/T1059/001). For example, adversaries may use the PowerShell command <code>Remove-EventLog -LogName Security</code> to delete the Security EventLog and after reboot, disable future logging.  Note: events may still be generated and logged in the .evtx file between the time the command is run and the reboot.(Citation: disable_win_evt_logging)\n\nAdversaries may also attempt to clear logs by directly deleting the stored log files within `C:\\Windows\\System32\\winevt\\logs\\`.",
+      "description": "Adversaries may clear Windows Event Logs to hide the activity of an intrusion. Windows Event Logs are a record of a computer's alerts and notifications. There are three system-defined sources of events: System, Application, and Security, with five event types: Error, Warning, Information, Success Audit, and Failure Audit.\n\nWith administrator privileges, the event logs can be cleared with the following utility commands:\n\n* `wevtutil cl system`\n* `wevtutil cl application`\n* `wevtutil cl security`\n\nThese logs may also be cleared through other mechanisms, such as the event viewer GUI or [PowerShell](https://attack.mitre.org/techniques/T1059/001). For example, adversaries may use the PowerShell command `Remove-EventLog -LogName Security` to delete the Security EventLog and after reboot, disable future logging. Note: events may still be generated and logged in the .evtx file between the time the command is run and the reboot.(Citation: disable_win_evt_logging)\n\nAdversaries may also attempt to clear logs by directly deleting the stored log files within `C:\\Windows\\System32\\winevt\\logs\\`.",
       "kill_chain_phases": [
         {
           "kill_chain_name": "mitre-attack",
-          "phase_name": "defense-evasion"
+          "phase_name": "defense-impairment"
         }
-      ]
+      ],
+      "x_mitre_attack_spec_version": "3.3.0",
+      "x_mitre_contributors": [
+        "Lucas Heiligenstein"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_version": "1.0"
     },
     {
       "id": "attack-pattern--60d0c01d-e2bf-49dd-a453-f8a9c9fa6f65",
@@ -446,15 +443,15 @@
       "spec_version": "2.1",
       "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
       "created": "2024-11-14T15:00:00.000Z",
-      "modified": "2024-11-14T15:00:00.000Z",
+      "modified": "2026-06-12T15:00:00.000Z",
       "revoked": false,
       "confidence": 0,
       "lang": "en",
       "name": "Log Deletion",
       "description": "Windows Event Logs cleared to hide the activity of an intrusion",
       "behavior_class": "anomalous",
-      "tactic": "Defense Evasion",
-      "technique": "T1070.001 - Indicator Removal - Clear Windows Event Logs",
+      "tactic": "Defense Impairment",
+      "technique": "T1685.005 - Disable or Modify Tools: Clear Windows Event Logs",
       "first_seen": "2022-03-31T13:00:00.000Z",
       "platforms": [
         {
@@ -532,7 +529,7 @@
       "description": "Powersploit usage to enumerate network",
       "analytic": {
         "type": "Sigma Rule - base64 encoded YAML file",
-        "rule": "dGl0bGU6IENvbW1hbmQgYW5kIFNjcmlwdGluZyBJbnRlcnByZXRlciAtIFBvd2VyU2hlbGwgUG93ZXJzcGxvaXQKaWQ6IGU4N2U3NTc0LWU2YWEtNDFhMy04NWUyLTg2MDZhNWIyNjRjMgpzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogUG93ZXJzcGxvaXQgdXNhZ2UgdG8gZW51bWVyYXRlIG5ldHdvcmsKcmVmZXJlbmNlczoKICAgICAtIGh0dHBzOi8vYXR0YWNrLm1pdHJlLm9yZy90ZWNobmlxdWVzL1QxMDE4LwphdXRob3I6IE9DQQpkYXRlOiAyMDI0LzEwLzE3Cm1vZGlmaWVkOiAyMDI2LzA1LzI5CnRhZ3M6CiAgICAtIGF0dGFjay50MTAxOAogICAgLSBhdHRhY2suZXhlY3V0aW9uCmxvZ3NvdXJjZToKICAgIGNhdGVnb3J5OiBwc19zY3JpcHQKICAgIHByb2R1Y3Q6IHdpbmRvd3MKICAgIHNlcnZpY2U6IHBvd2Vyc2hlbGwKZGV0ZWN0aW9uOgogICAgc2VsZWN0aW9uXzE6CiAgICAgICAgRXZlbnRDb2RlOiA0MTA0CiAgICBzZWxlY3Rpb25fMjoKICAgICAgICBTY3JpcHRCbG9ja1RleHQ6ICcqR2V0LURvbWFpbkNvbXB1dGVyKicKICAgIHNlbGVjdGlvbl8zOgogICAgICAgIFNjcmlwdEJsb2NrVGV4dDogJypHZXQtTmV0Q29tcHV0ZXIqJwogICAgY29uZGl0aW9uOiBzZWxlY3Rpb25fMSBhbmQgc2VsZWN0aW9uXzIgYW5kIHNlbGVjdGlvbl8zCmZhbHNlcG9zaXRpdmVzOgogICAgLSBMZWdpdGltYXRlIHBvd2Vyc2hlbGwgc2NyaXB0cwpsZXZlbDogaGlnaA=="
+        "rule": "dGl0bGU6IENvbW1hbmQgYW5kIFNjcmlwdGluZyBJbnRlcnByZXRlciAtIFBvd2VyU2hlbGwgUG93ZXJzcGxvaXQKaWQ6IGU4N2U3NTc0LWU2YWEtNDFhMy04NWUyLTg2MDZhNWIyNjRjMgpzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogUG93ZXJzcGxvaXQgdXNhZ2UgdG8gZW51bWVyYXRlIG5ldHdvcmsKcmVmZXJlbmNlczoKICAgICAtIGh0dHBzOi8vYXR0YWNrLm1pdHJlLm9yZy90ZWNobmlxdWVzL1QxMDE4LwphdXRob3I6IE9DQQpkYXRlOiAyMDI0LzEwLzE3Cm1vZGlmaWVkOiAyMDI2LzA1LzI5CnRhZ3M6CiAgICAtIGF0dGFjay50MTAxOAogICAgLSBhdHRhY2suZGlzY292ZXJ5CmxvZ3NvdXJjZToKICAgIGNhdGVnb3J5OiBwc19zY3JpcHQKICAgIHByb2R1Y3Q6IHdpbmRvd3MKICAgIHNlcnZpY2U6IHBvd2Vyc2hlbGwKZGV0ZWN0aW9uOgogICAgc2VsZWN0aW9uXzE6CiAgICAgICAgRXZlbnRDb2RlOiA0MTA0CiAgICBzZWxlY3Rpb25fMjoKICAgICAgICBTY3JpcHRCbG9ja1RleHQ6ICcqR2V0LURvbWFpbkNvbXB1dGVyKicKICAgIHNlbGVjdGlvbl8zOgogICAgICAgIFNjcmlwdEJsb2NrVGV4dDogJypHZXQtTmV0Q29tcHV0ZXIqJwogICAgY29uZGl0aW9uOiBzZWxlY3Rpb25fMSBhbmQgc2VsZWN0aW9uXzIgYW5kIHNlbGVjdGlvbl8zCmZhbHNlcG9zaXRpdmVzOgogICAgLSBMZWdpdGltYXRlIHBvd2Vyc2hlbGwgc2NyaXB0cwpsZXZlbDogaGlnaA=="
       },
       "extensions": {
         "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
@@ -576,7 +573,7 @@
       "description": "Windows Event Logs cleared to hide the activity of an intrusion",
       "analytic": {
         "type": "Sigma Rule - base64 encoded YAML file",
-        "rule": "dGl0bGU6IEluZGljYXRvciBSZW1vdmFsIC0gQ2xlYXIgV2luZG93cyBFdmVudCBMb2dzCmlkOiBtNThrcDJqNC03djNoLTkxMDItNjUyMS1wNGIxbjM5dDA2ZDEKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IFdpbmRvd3MgRXZlbnQgTG9ncyBjbGVhcmVkIHRvIGhpZGUgdGhlIGFjdGl2aXR5IG9mIGFuIGludHJ1c2lvbgpyZWZlcmVuY2VzOiBodHRwczovL2F0dGFjay5taXRyZS5vcmcvdGVjaG5pcXVlcy9UMTA3MC8wMDEvCmF1dGhvcjogT0NBCmRhdGU6IDIwMjQvMTAvMjMKbW9kaWZpZWQ6IDIwMjQvMTAvMjMKdGFnczoKICAgIC0gYXR0YWNrLnQxMDcwLjAwMQogICAgLSBhdHRhY2suZGVmZW5zZV9ldmFzaW9uCmxvZ3NvdXJjZToKICAgIGNhdGVnb3J5OiBwcm9jZXNzX2NyZWF0aW9uCiAgICBwcm9kdWN0OiB3aW5kb3dzCmRldGVjdGlvbjoKICAgIHNlbGVjdGlvbl8xOgogICAgICAgIGV2ZW50LmNvZGU6IDEKICAgIHNlbGVjdGlvbl8yOgogICAgICAgIHdpbmxvZy5ldmVudF9kYXRhLkNvbW1hbmRMaW5lLmtleXdvcmQ6IOKAnSp3ZXZ0dXRpbCoiCiAgICBzZWxlY3Rpb25fMzoKICAgICAgICB3aW5sb2cuZXZlbnRfZGF0YS5Db21tYW5kTGluZS5rZXl3b3JkOiAiKmNsKiIKICAgIGNvbmRpdGlvbjogYWxsIG9mIHNlbGVjdGlvbl8qCmZhbHNlcG9zaXRpdmVzOgogICAgLSBsZWdpdGltYXRlIGFkbWluaXN0cmF0b3IgYWN0aXZpdHkKbGV2ZWw6IGhpZ2g="
+        "rule": "dGl0bGU6IENsZWFyIFdpbmRvd3MgRXZlbnQgTG9ncwppZDogMTE3MzU0ODEtNjhkOS00OGY5LTg1MzAtNGU2NzMyMDU5MWE1CnN0YXR1czogZXhwZXJpbWVudGFsCmRlc2NyaXB0aW9uOiBXaW5kb3dzIEV2ZW50IExvZ3MgY2xlYXJlZCB0byBoaWRlIHRoZSBhY3Rpdml0eSBvZiBhbiBpbnRydXNpb24KcmVmZXJlbmNlczoKICAgICAtIGh0dHBzOi8vYXR0YWNrLm1pdHJlLm9yZy90ZWNobmlxdWVzL1QxNjg1LzAwNS8KYXV0aG9yOiBPQ0EKZGF0ZTogMjAyNC8xMC8yMwptb2RpZmllZDogMjAyNi8wNi8wOQp0YWdzOgogICAgLSBhdHRhY2sudDE2ODUuMDA1CiAgICAtIGF0dGFjay5kZWZlbnNlX2ltcGFpcm1lbnQKbG9nc291cmNlOgogICAgY2F0ZWdvcnk6IHByb2Nlc3NfY3JlYXRpb24KICAgIHByb2R1Y3Q6IHdpbmRvd3MKICAgIHNlcnZpY2U6IHN5c21vbgpkZXRlY3Rpb246CiAgICBzZWxlY3Rpb25fMToKICAgICAgICBFdmVudENvZGU6IDEKICAgIHNlbGVjdGlvbl8yOgogICAgICAgIENvbW1hbmRMaW5lOiAiKndldnR1dGlsKiIKICAgIHNlbGVjdGlvbl8zOgogICAgICAgIENvbW1hbmRMaW5lOiAiKmNsKiIKICAgIGNvbmRpdGlvbjogYWxsIG9mIHNlbGVjdGlvbl8qCmZhbHNlcG9zaXRpdmVzOgogICAgLSBsZWdpdGltYXRlIGFkbWluaXN0cmF0b3IgYWN0aXZpdHkKbGV2ZWw6IGhpZ2g="
       },
       "extensions": {
         "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
@@ -659,7 +656,7 @@
         "attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90",
         "attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735",
         "attack-pattern--3fc9b85a-2862-4363-a64d-d692e3ffbee0",
-        "attack-pattern--6495ae23-3ab4-43c5-a94f-5638a2c31fd2",
+        "attack-pattern--75b9a4d2-d4e2-4ca1-9aab-1badd9e05fd0",
         "x-oca-behavior--b4eb6b07-787a-49d3-9677-fedef58d8342",
         "x-oca-behavior--B63470F0-0BC7-467E-BE25-08F5FBFC0415",
         "x-oca-behavior--8858A2BD-5729-4EF1-9932-3E3CC7FEFF99",
@@ -775,7 +772,7 @@
       "description": "This detection looks for winrshost.exe running commands with cmd.exe or powershell",
       "analytic": {
         "type": "Sigma Rule - base64 encoded YAML file",
-        "rule": "dGl0bGU6IFdpbnJzIHJ1bm5pbmcgY29tbWFuZHMKaWQ6IDIxNWJjMWVkLWNmNmItNGFmOC04ZmJlLTk3OWFlY2E5N2M2ZApzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogVGhpcyBkZXRlY3Rpb24gbG9va3MgZm9yIHdpbnJzaG9zdC5leGUgcnVubmluZyBjb21tYW5kcyB3aXRoIGNtZC5leGUgb3IgcG93ZXJzaGVsbApyZWZlcmVuY2VzOiBodHRwczovL2F0dGFjay5taXRyZS5vcmcvdGVjaG5pcXVlcy9UMTAyMS8wMDYvCmF1dGhvcjogSkhVQVBMCmRhdGU6IDIwMjUvMDMvMDYKbW9kaWZpZWQ6IDIwMjUvMDMvMDYKdGFnczoKICAgIC0gYXR0YWNrLnQxMDIxLjAwNgogICAgLSBhdHRhY2suZXhlY3V0aW9uCmxvZ3NvdXJjZToKICAgIGNhdGVnb3J5OiBwcm9jZXNzCiAgICBwcm9kdWN0OiB3aW5kb3dzCmRldGVjdGlvbjoKICAgIHNlbGVjdGlvbl8xOgogICAgICAgIEV2ZW50Q29kZTogNDY4OAogICAgc2VsZWN0aW9uXzI6CiAgICAgICAgcGFyZW50X3Byb2Nlc3NfbmFtZTogIndpbnJzaG9zdC5leGUiCiAgICBzZWxlY3Rpb25fMzoKICAgICAgICBwcm9jZXNzX25hbWU6CiAgICAgICAgICAgIC0gImNtZC5leGUiCiAgICAgICAgICAgIC0gIipwb3dlcnNoZWxsKiIKICAgIGNvbmRpdGlvbjogc2VsZWN0aW9uXzEgYW5kIHNlbGVjdGlvbl8yIGFuZCBzZWxlY3Rpb25fMwpmYWxzZXBvc2l0aXZlczoKICAgIC0gbGVnaXRpbWF0ZSBhZG1pbmlzdHJhdG9yIGFjdGl2aXR5CmxldmVsOiBoaWdoCg=="
+        "rule": "dGl0bGU6IFdpbnJzIHJ1bm5pbmcgY29tbWFuZHMKaWQ6IGE4MTEzMGMwLTIxZTctNDNmOC1hNzA1LTRkNzc1OWZlYjM1MApzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogVGhpcyBkZXRlY3Rpb24gbG9va3MgZm9yIHdpbnJzaG9zdC5leGUgcnVubmluZyBjb21tYW5kcyB3aXRoIGNtZC5leGUgb3IgcG93ZXJzaGVsbApyZWZlcmVuY2VzOiAKICAgIC0gaHR0cHM6Ly9hdHRhY2subWl0cmUub3JnL3RlY2huaXF1ZXMvVDEwMjEvMDA2LwphdXRob3I6IEpIVUFQTApkYXRlOiAyMDI1LzAzLzA2Cm1vZGlmaWVkOiAyMDI2LzA2LzExCnRhZ3M6CiAgICAtIGF0dGFjay50MTAyMS4wMDYKICAgIC0gYXR0YWNrLmxhdGVyYWxfbW92ZW1lbnQKbG9nc291cmNlOgogICAgY2F0ZWdvcnk6IHByb2Nlc3NfY3JlYXRpb24KICAgIHByb2R1Y3Q6IHdpbmRvd3MKZGV0ZWN0aW9uOgogICAgc2VsZWN0aW9uXzE6CiAgICAgICAgRXZlbnRDb2RlOiA0Njg4CiAgICBzZWxlY3Rpb25fMjoKICAgICAgICBwYXJlbnRfcHJvY2Vzc19uYW1lOiAid2lucnNob3N0LmV4ZSIKICAgIHNlbGVjdGlvbl8zOgogICAgICAgIHByb2Nlc3NfbmFtZToKICAgICAgICAgICAgLSAiY21kLmV4ZSIKICAgICAgICAgICAgLSAiKnBvd2Vyc2hlbGwqIgogICAgY29uZGl0aW9uOiBzZWxlY3Rpb25fMSBhbmQgc2VsZWN0aW9uXzIgYW5kIHNlbGVjdGlvbl8zCmZhbHNlcG9zaXRpdmVzOgogICAgLSBsZWdpdGltYXRlIGFkbWluaXN0cmF0b3IgYWN0aXZpdHkKbGV2ZWw6IGhpZ2g="
       },
       "extensions": {
         "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
@@ -841,7 +838,7 @@
     {
       "id": "relationship--0a83195d-b41d-4010-a259-5995932e956e",
       "source_ref": "x-oca-behavior--b4eb6b07-787a-49d3-9677-fedef58d8342",
-      "target_ref": "attack-pattern--6495ae23-3ab4-43c5-a94f-5638a2c31fd2",
+      "target_ref": "attack-pattern--75b9a4d2-d4e2-4ca1-9aab-1badd9e05fd0",
       "relationship_type": "uses",
       "type": "relationship",
       "spec_version": "2.1",
