@@ -216,38 +216,55 @@
       "x_mitre_version": "3.6"
     },
     {
-      "id": "attack-pattern--3fc9b85a-2862-4363-a64d-d692e3ffbee0",
       "type": "attack-pattern",
       "spec_version": "2.1",
+      "id": "attack-pattern--edf91964-b26e-4b4a-9600-ccacd7d7df24",
+      "created": "2020-02-11T18:42:35.572Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "created": "2020-02-11T18:48:28.456Z",
-      "modified": "2024-10-15T14:57:46.850Z",
       "revoked": false,
-      "confidence": 0,
-      "lang": "en",
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1555",
-          "external_id": "T1555"
+          "url": "https://attack.mitre.org/techniques/T1003/003",
+          "external_id": "T1003.003"
         },
         {
-          "source_name": "F-Secure The Dukes",
-          "description": "F-Secure Labs. (2015, September 17). The Dukes: 7 years of Russian cyberespionage. Retrieved December 10, 2015.",
-          "url": "https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf"
+          "source_name": "Metcalf 2015",
+          "description": "Metcalf, S. (2015, January 19). Attackers Can Now Use Mimikatz to Implant Skeleton Key on Domain Controllers & BackDoor Your Active Directory Forest. Retrieved February 3, 2015.",
+          "url": "http://adsecurity.org/?p=1275"
+        },
+        {
+          "source_name": "Wikipedia Active Directory",
+          "description": "Wikipedia. (2018, March 10). Active Directory. Retrieved April 11, 2018.",
+          "url": "https://en.wikipedia.org/wiki/Active_Directory"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
-      "name": "Credentials from Password Stores",
-      "description": "Adversaries may search for common password storage locations to obtain user credentials.(Citation: F-Secure The Dukes) Passwords are stored in several places on a system, depending on the operating system or application holding the credentials. There are also specific applications and services that store passwords to make them easier for users to manage and maintain, such as password managers and cloud secrets vaults. Once credentials are obtained, they can be used to perform lateral movement and access restricted information.",
+      "modified": "2026-05-12T15:12:00.723Z",
+      "name": "NTDS",
+      "description": "Adversaries may attempt to access or create a copy of the Active Directory domain database in order to steal credential information, as well as obtain other information about domain members such as devices, users, and access rights. By default, the NTDS file (NTDS.dit) is located in <code>%SystemRoot%\\NTDS\\Ntds.dit</code> of a domain controller.(Citation: Wikipedia Active Directory)\n\nIn addition to looking for NTDS files on active Domain Controllers, adversaries may search for backups that contain the same or similar information.(Citation: Metcalf 2015)\n\nThe following tools and techniques can be used to enumerate the NTDS file and the contents of the entire Active Directory hashes.\n\n* Volume Shadow Copy\n* secretsdump.py\n* Using the in-built Windows tool, ntdsutil.exe\n* Invoke-NinjaCopy\n",
       "kill_chain_phases": [
         {
           "kill_chain_name": "mitre-attack",
           "phase_name": "credential-access"
         }
-      ]
+      ],
+      "x_mitre_attack_spec_version": "3.3.0",
+      "x_mitre_contributors": [
+        "Ed Williams, Trustwave, SpiderLabs"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_version": "1.3"
     },
     {
       "id": "attack-pattern--75b9a4d2-d4e2-4ca1-9aab-1badd9e05fd0",
@@ -414,7 +431,7 @@
       "description": "Adversary extracts the ntds.dit file, which contains Active Directory data",
       "behavior_class": "anomalous",
       "tactic": "Credential Access",
-      "technique": "T1555 - Credentials from Password Stores",
+      "technique": "T1003.003 - OS Credential Dumping: NTDS",
       "first_seen": "2022-03-31T13:00:00.000Z",
       "platforms": [
         {
@@ -655,7 +672,7 @@
         "identity--b085a68a-bf48-4316-9667-37af78cba894",
         "attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90",
         "attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735",
-        "attack-pattern--3fc9b85a-2862-4363-a64d-d692e3ffbee0",
+        "attack-pattern--edf91964-b26e-4b4a-9600-ccacd7d7df24",
         "attack-pattern--75b9a4d2-d4e2-4ca1-9aab-1badd9e05fd0",
         "x-oca-behavior--b4eb6b07-787a-49d3-9677-fedef58d8342",
         "x-oca-behavior--B63470F0-0BC7-467E-BE25-08F5FBFC0415",
@@ -828,7 +845,7 @@
     {
       "id": "relationship--671d5d41-e094-4be9-ac67-15b7eaac2578",
       "source_ref": "x-oca-behavior--b63470f0-0bc7-467e-be25-08f5fbfc0415",
-      "target_ref": "attack-pattern--3fc9b85a-2862-4363-a64d-d692e3ffbee0",
+      "target_ref": "attack-pattern--edf91964-b26e-4b4a-9600-ccacd7d7df24",
       "relationship_type": "uses",
       "type": "relationship",
       "spec_version": "2.1",
