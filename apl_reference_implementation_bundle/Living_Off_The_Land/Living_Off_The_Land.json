@@ -1,5 +1,4 @@
 {
-  "spec_version": "2.1",
   "id": "bundle--14e1d58f-4c98-42b2-877d-6f5c24fd895d",
   "type": "bundle",
   "objects": [
@@ -91,15 +90,12 @@
       "identity_class": "organization"
     },
     {
-      "id": "attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90",
       "type": "attack-pattern",
       "spec_version": "2.1",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "id": "attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90",
       "created": "2020-02-11T18:41:44.783Z",
-      "modified": "2024-08-13T13:52:45.379Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "revoked": false,
-      "confidence": 0,
-      "lang": "en",
       "external_references": [
         {
           "source_name": "mitre-attack",
@@ -145,6 +141,7 @@
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
+      "modified": "2026-05-12T15:12:00.637Z",
       "name": "LSASS Memory",
       "description": "Adversaries may attempt to access credential material stored in the process memory of the Local Security Authority Subsystem Service (LSASS). After a user logs on, the system generates and stores a variety of credential materials in LSASS process memory. These credential materials can be harvested by an administrative user or SYSTEM and used to conduct [Lateral Movement](https://attack.mitre.org/tactics/TA0008) using [Use Alternate Authentication Material](https://attack.mitre.org/techniques/T1550).\n\nAs well as in-memory techniques, the LSASS process memory can be dumped from the target host and analyzed on a local system.\n\nFor example, on the target host use procdump:\n\n* <code>procdump -ma lsass.exe lsass_dump</code>\n\nLocally, mimikatz can be run using:\n\n* <code>sekurlsa::Minidump lsassdump.dmp</code>\n* <code>sekurlsa::logonPasswords</code>\n\nBuilt-in Windows tools such as `comsvcs.dll` can also be used:\n\n* <code>rundll32.exe C:\\Windows\\System32\\comsvcs.dll MiniDump PID  lsass.dmp full</code>(Citation: Volexity Exchange Marauder March 2021)(Citation: Symantec Attacks Against Government Sector)\n\nSimilar to [Image File Execution Options Injection](https://attack.mitre.org/techniques/T1546/012), the silent process exit mechanism can be abused to create a memory dump of `lsass.exe` through Windows Error Reporting (`WerFault.exe`).(Citation: Deep Instinct LSASS)\n\nWindows Security Support Provider (SSP) DLLs are loaded into LSASS process at system start. Once loaded into the LSA, SSP DLLs have access to encrypted and plaintext passwords that are stored in Windows, such as any logged-on user's Domain password or smart card PINs. The SSP configuration is stored in two Registry keys: <code>HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\Security Packages</code> and <code>HKLM\\SYSTEM\\CurrentControlSet\\Control\\Lsa\\OSConfig\\Security Packages</code>. An adversary may modify these Registry keys to add new SSPs, which will be loaded the next time the system boots, or when the AddSecurityPackage Windows API function is called.(Citation: Graeber 2014)\n\nThe following SSPs can be used to access credentials:\n\n* Msv: Interactive logons, batch logons, and service logons are done through the MSV authentication package.\n* Wdigest: The Digest Authentication protocol is designed for use with Hypertext Transfer Protocol (HTTP) and Simple Authentication Security Layer (SASL) exchanges.(Citation: TechNet Blogs Credential Protection)\n* Kerberos: Preferred for mutual client-server domain authentication in Windows 2000 and later.\n* CredSSP:  Provides SSO and Network Level Authentication for Remote Desktop Services.(Citation: TechNet Blogs Credential Protection)\n",
       "kill_chain_phases": [
@@ -152,170 +149,191 @@
           "kill_chain_name": "mitre-attack",
           "phase_name": "credential-access"
         }
-      ]
+      ],
+      "x_mitre_attack_spec_version": "3.3.0",
+      "x_mitre_contributors": [
+        "Edward Millington",
+        "Ed Williams, Trustwave, SpiderLabs",
+        "Olaf Hartong, Falcon Force",
+        "Michael Forret, Quorum Cyber"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_version": "1.5"
     },
     {
-      "id": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
       "type": "attack-pattern",
       "spec_version": "2.1",
+      "id": "attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735",
+      "created": "2017-05-31T21:30:28.187Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "created": "2020-03-09T13:48:55.078Z",
-      "modified": "2024-10-15T16:39:13.228Z",
       "revoked": false,
-      "confidence": 0,
-      "lang": "en",
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1059/001",
-          "external_id": "T1059.001"
+          "url": "https://attack.mitre.org/techniques/T1018",
+          "external_id": "T1018"
         },
         {
-          "source_name": "Microsoft PSfromCsharp APR 2014",
-          "description": "Babinec, K. (2014, April 28). Executing PowerShell scripts from C#. Retrieved April 22, 2019.",
-          "url": "https://blogs.msdn.microsoft.com/kebab/2014/04/28/executing-powershell-scripts-from-c/"
+          "source_name": "CISA AR21-126A FIVEHANDS May 2021",
+          "description": "CISA. (2021, May 6). Analysis Report (AR21-126A) FiveHands Ransomware. Retrieved June 7, 2021.",
+          "url": "https://us-cert.cisa.gov/ncas/analysis-reports/ar21-126a"
         },
         {
-          "source_name": "SilentBreak Offensive PS Dec 2015",
-          "description": "Christensen, L.. (2015, December 28). The Evolution of Offensive PowerShell Invocation. Retrieved December 8, 2018.",
-          "url": "https://web.archive.org/web/20190508170150/https://silentbreaksecurity.com/powershell-jobs-without-powershell-exe/"
+          "source_name": "Elastic - Koadiac Detection with EQL",
+          "description": "Stepanic, D.. (2020, January 13). Embracing offensive tooling: Building detections against Koadic using EQL. Retrieved November 17, 2024.",
+          "url": "https://www.elastic.co/security-labs/embracing-offensive-tooling-building-detections-against-koadic-using-eql"
         },
         {
-          "source_name": "FireEye PowerShell Logging 2016",
-          "description": "Dunwoody, M. (2016, February 11). GREATER VISIBILITY THROUGH POWERSHELL LOGGING. Retrieved February 16, 2016.",
-          "url": "https://www.fireeye.com/blog/threat-research/2016/02/greater_visibilityt.html"
-        },
-        {
-          "source_name": "Github PSAttack",
-          "description": "Haight, J. (2016, April 21). PS>Attack. Retrieved September 27, 2024.",
-          "url": "https://github.com/Exploit-install/PSAttack-1"
-        },
-        {
-          "source_name": "inv_ps_attacks",
-          "description": "Hastings, M. (2014, July 16). Investigating PowerShell Attacks. Retrieved December 1, 2021.",
-          "url": "https://powershellmagazine.com/2014/07/16/investigating-powershell-attacks/"
-        },
-        {
-          "source_name": "Malware Archaeology PowerShell Cheat Sheet",
-          "description": "Malware Archaeology. (2016, June). WINDOWS POWERSHELL LOGGING CHEAT SHEET - Win 7/Win 2008 or later. Retrieved June 24, 2016.",
-          "url": "http://www.malwarearchaeology.com/s/Windows-PowerShell-Logging-Cheat-Sheet-ver-June-2016-v2.pdf"
-        },
-        {
-          "source_name": "TechNet PowerShell",
-          "description": "Microsoft. (n.d.). Windows PowerShell Scripting. Retrieved April 28, 2016.",
-          "url": "https://technet.microsoft.com/en-us/scriptcenter/dd742419.aspx"
-        },
-        {
-          "source_name": "Sixdub PowerPick Jan 2016",
-          "description": "Warner, J.. (2015, January 6). Inexorable PowerShell – A Red Teamer’s Tale of Overcoming Simple AppLocker Policies. Retrieved December 8, 2018.",
-          "url": "https://web.archive.org/web/20160327101330/http://www.sixdub.net/?p=367"
+          "source_name": "US-CERT-TA18-106A",
+          "description": "US-CERT. (2018, April 20). Alert (TA18-106A) Russian State-Sponsored Cyber Actors Targeting Network Infrastructure Devices. Retrieved October 19, 2020.",
+          "url": "https://www.us-cert.gov/ncas/alerts/TA18-106A"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
-      "name": "PowerShell",
-      "description": "Adversaries may abuse PowerShell commands and scripts for execution. PowerShell is a powerful interactive command-line interface and scripting environment included in the Windows operating system.(Citation: TechNet PowerShell) Adversaries can use PowerShell to perform a number of actions, including discovery of information and execution of code. Examples include the <code>Start-Process</code> cmdlet which can be used to run an executable and the <code>Invoke-Command</code> cmdlet which runs a command locally or on a remote computer (though administrator permissions are required to use PowerShell to connect to remote systems).\n\nPowerShell may also be used to download and run executables from the Internet, which can be executed from disk or in memory without touching disk.\n\nA number of PowerShell-based offensive testing tools are available, including [Empire](https://attack.mitre.org/software/S0363),  [PowerSploit](https://attack.mitre.org/software/S0194), [PoshC2](https://attack.mitre.org/software/S0378), and PSAttack.(Citation: Github PSAttack)\n\nPowerShell commands/scripts can also be executed without directly invoking the <code>powershell.exe</code> binary through interfaces to PowerShell's underlying <code>System.Management.Automation</code> assembly DLL exposed through the .NET framework and Windows Common Language Interface (CLI).(Citation: Sixdub PowerPick Jan 2016)(Citation: SilentBreak Offensive PS Dec 2015)(Citation: Microsoft PSfromCsharp APR 2014)",
+      "modified": "2026-05-12T15:12:00.722Z",
+      "name": "Remote System Discovery",
+      "description": "Adversaries may attempt to get a listing of other systems by IP address, hostname, or other logical identifier on a network that may be used for Lateral Movement from the current system. Functionality could exist within remote access tools to enable this, but utilities available on the operating system could also be used such as  [Ping](https://attack.mitre.org/software/S0097), <code>net view</code> using [Net](https://attack.mitre.org/software/S0039), or, on ESXi servers, `esxcli network diag ping`.\n\nAdversaries may also analyze data from local host files (ex: <code>C:\\Windows\\System32\\Drivers\\etc\\hosts</code> or <code>/etc/hosts</code>) or other passive means (such as local [Arp](https://attack.mitre.org/software/S0099) cache entries) in order to discover the presence of remote systems in an environment.\n\nAdversaries may also target discovery of network infrastructure as well as leverage [Network Device CLI](https://attack.mitre.org/techniques/T1059/008) commands on network devices to gather detailed information about systems within a network (e.g. <code>show cdp neighbors</code>, <code>show arp</code>).(Citation: US-CERT-TA18-106A)(Citation: CISA AR21-126A FIVEHANDS May 2021)  \n",
       "kill_chain_phases": [
         {
           "kill_chain_name": "mitre-attack",
-          "phase_name": "execution"
+          "phase_name": "discovery"
         }
-      ]
+      ],
+      "x_mitre_attack_spec_version": "3.3.0",
+      "x_mitre_contributors": [
+        "Daniel Stepanic, Elastic",
+        "RedHuntLabs, @redhuntlabs",
+        "Austin Clark, @c2defense"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": false,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "ESXi",
+        "Linux",
+        "macOS",
+        "Network Devices",
+        "Windows"
+      ],
+      "x_mitre_version": "3.6"
     },
     {
-      "id": "attack-pattern--3fc9b85a-2862-4363-a64d-d692e3ffbee0",
       "type": "attack-pattern",
       "spec_version": "2.1",
+      "id": "attack-pattern--edf91964-b26e-4b4a-9600-ccacd7d7df24",
+      "created": "2020-02-11T18:42:35.572Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "created": "2020-02-11T18:48:28.456Z",
-      "modified": "2024-10-15T14:57:46.850Z",
       "revoked": false,
-      "confidence": 0,
-      "lang": "en",
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1555",
-          "external_id": "T1555"
+          "url": "https://attack.mitre.org/techniques/T1003/003",
+          "external_id": "T1003.003"
         },
         {
-          "source_name": "F-Secure The Dukes",
-          "description": "F-Secure Labs. (2015, September 17). The Dukes: 7 years of Russian cyberespionage. Retrieved December 10, 2015.",
-          "url": "https://www.f-secure.com/documents/996508/1030745/dukes_whitepaper.pdf"
+          "source_name": "Metcalf 2015",
+          "description": "Metcalf, S. (2015, January 19). Attackers Can Now Use Mimikatz to Implant Skeleton Key on Domain Controllers & BackDoor Your Active Directory Forest. Retrieved February 3, 2015.",
+          "url": "http://adsecurity.org/?p=1275"
+        },
+        {
+          "source_name": "Wikipedia Active Directory",
+          "description": "Wikipedia. (2018, March 10). Active Directory. Retrieved April 11, 2018.",
+          "url": "https://en.wikipedia.org/wiki/Active_Directory"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
-      "name": "Credentials from Password Stores",
-      "description": "Adversaries may search for common password storage locations to obtain user credentials.(Citation: F-Secure The Dukes) Passwords are stored in several places on a system, depending on the operating system or application holding the credentials. There are also specific applications and services that store passwords to make them easier for users to manage and maintain, such as password managers and cloud secrets vaults. Once credentials are obtained, they can be used to perform lateral movement and access restricted information.",
+      "modified": "2026-05-12T15:12:00.723Z",
+      "name": "NTDS",
+      "description": "Adversaries may attempt to access or create a copy of the Active Directory domain database in order to steal credential information, as well as obtain other information about domain members such as devices, users, and access rights. By default, the NTDS file (NTDS.dit) is located in <code>%SystemRoot%\\NTDS\\Ntds.dit</code> of a domain controller.(Citation: Wikipedia Active Directory)\n\nIn addition to looking for NTDS files on active Domain Controllers, adversaries may search for backups that contain the same or similar information.(Citation: Metcalf 2015)\n\nThe following tools and techniques can be used to enumerate the NTDS file and the contents of the entire Active Directory hashes.\n\n* Volume Shadow Copy\n* secretsdump.py\n* Using the in-built Windows tool, ntdsutil.exe\n* Invoke-NinjaCopy\n",
       "kill_chain_phases": [
         {
           "kill_chain_name": "mitre-attack",
           "phase_name": "credential-access"
         }
-      ]
+      ],
+      "x_mitre_attack_spec_version": "3.3.0",
+      "x_mitre_contributors": [
+        "Ed Williams, Trustwave, SpiderLabs"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_version": "1.3"
     },
     {
-      "id": "attack-pattern--6495ae23-3ab4-43c5-a94f-5638a2c31fd2",
       "type": "attack-pattern",
       "spec_version": "2.1",
+      "id": "attack-pattern--75b9a4d2-d4e2-4ca1-9aab-1badd9e05fd0",
+      "created": "2026-04-14T22:54:03.796Z",
       "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
-      "created": "2020-01-28T17:05:14.707Z",
-      "modified": "2024-04-16T12:40:58.536Z",
       "revoked": false,
-      "confidence": 0,
-      "lang": "en",
       "external_references": [
         {
           "source_name": "mitre-attack",
-          "url": "https://attack.mitre.org/techniques/T1070/001",
-          "external_id": "T1070.001"
+          "url": "https://attack.mitre.org/techniques/T1685/005",
+          "external_id": "T1685.005"
         },
         {
           "source_name": "disable_win_evt_logging",
           "description": "Heiligenstein, L. (n.d.). REP-25: Disable Windows Event Logging. Retrieved April 7, 2022.",
           "url": "https://ptylu.github.io/content/report/report.html?report=25"
-        },
-        {
-          "source_name": "Microsoft Clear-EventLog",
-          "description": "Microsoft. (n.d.). Clear-EventLog. Retrieved July 2, 2018.",
-          "url": "https://docs.microsoft.com/powershell/module/microsoft.powershell.management/clear-eventlog"
-        },
-        {
-          "source_name": "Microsoft EventLog.Clear",
-          "description": "Microsoft. (n.d.). EventLog.Clear Method (). Retrieved July 2, 2018.",
-          "url": "https://msdn.microsoft.com/library/system.diagnostics.eventlog.clear.aspx"
-        },
-        {
-          "source_name": "Microsoft wevtutil Oct 2017",
-          "description": "Plett, C. et al.. (2017, October 16). wevtutil. Retrieved July 2, 2018.",
-          "url": "https://docs.microsoft.com/windows-server/administration/windows-commands/wevtutil"
         }
       ],
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
+      "modified": "2026-05-12T15:12:00.642Z",
       "name": "Clear Windows Event Logs",
-      "description": "Adversaries may clear Windows Event Logs to hide the activity of an intrusion. Windows Event Logs are a record of a computer's alerts and notifications. There are three system-defined sources of events: System, Application, and Security, with five event types: Error, Warning, Information, Success Audit, and Failure Audit.\n\n\nWith administrator privileges, the event logs can be cleared with the following utility commands:\n\n* <code>wevtutil cl system</code>\n* <code>wevtutil cl application</code>\n* <code>wevtutil cl security</code>\n\nThese logs may also be cleared through other mechanisms, such as the event viewer GUI or [PowerShell](https://attack.mitre.org/techniques/T1059/001). For example, adversaries may use the PowerShell command <code>Remove-EventLog -LogName Security</code> to delete the Security EventLog and after reboot, disable future logging.  Note: events may still be generated and logged in the .evtx file between the time the command is run and the reboot.(Citation: disable_win_evt_logging)\n\nAdversaries may also attempt to clear logs by directly deleting the stored log files within `C:\\Windows\\System32\\winevt\\logs\\`.",
+      "description": "Adversaries may clear Windows Event Logs to hide the activity of an intrusion. Windows Event Logs are a record of a computer's alerts and notifications. There are three system-defined sources of events: System, Application, and Security, with five event types: Error, Warning, Information, Success Audit, and Failure Audit.\n\nWith administrator privileges, the event logs can be cleared with the following utility commands:\n\n* `wevtutil cl system`\n* `wevtutil cl application`\n* `wevtutil cl security`\n\nThese logs may also be cleared through other mechanisms, such as the event viewer GUI or [PowerShell](https://attack.mitre.org/techniques/T1059/001). For example, adversaries may use the PowerShell command `Remove-EventLog -LogName Security` to delete the Security EventLog and after reboot, disable future logging. Note: events may still be generated and logged in the .evtx file between the time the command is run and the reboot.(Citation: disable_win_evt_logging)\n\nAdversaries may also attempt to clear logs by directly deleting the stored log files within `C:\\Windows\\System32\\winevt\\logs\\`.",
       "kill_chain_phases": [
         {
           "kill_chain_name": "mitre-attack",
-          "phase_name": "defense-evasion"
+          "phase_name": "defense-impairment"
         }
-      ]
+      ],
+      "x_mitre_attack_spec_version": "3.3.0",
+      "x_mitre_contributors": [
+        "Lucas Heiligenstein"
+      ],
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_version": "1.0"
     },
     {
-      "id": "attack-pattern--60d0c01d-e2bf-49dd-a453-f8a9c9fa6f65",
       "type": "attack-pattern",
       "spec_version": "2.1",
-      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "id": "attack-pattern--60d0c01d-e2bf-49dd-a453-f8a9c9fa6f65",
       "created": "2020-02-11T18:29:47.757Z",
-      "modified": "2024-09-12T15:28:23.398Z",
+      "created_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
       "revoked": false,
-      "confidence": 0,
-      "lang": "en",
       "external_references": [
         {
           "source_name": "mitre-attack",
@@ -346,6 +364,7 @@
       "object_marking_refs": [
         "marking-definition--fa42a846-8d90-4e51-bc29-71d5b4802168"
       ],
+      "modified": "2025-10-24T17:48:51.000Z",
       "name": "Windows Remote Management",
       "description": "Adversaries may use [Valid Accounts](https://attack.mitre.org/techniques/T1078) to interact with remote systems using Windows Remote Management (WinRM). The adversary may then perform actions as the logged-on user.\n\nWinRM is the name of both a Windows service and a protocol that allows a user to interact with a remote system (e.g., run an executable, modify the Registry, modify services).(Citation: Microsoft WinRM) It may be called with the `winrm` command or by any number of programs such as PowerShell.(Citation: Jacobsen 2014) WinRM  can be used as a method of remotely interacting with [Windows Management Instrumentation](https://attack.mitre.org/techniques/T1047).(Citation: MSDN WMI)",
       "kill_chain_phases": [
@@ -353,7 +372,18 @@
           "kill_chain_name": "mitre-attack",
           "phase_name": "lateral-movement"
         }
-      ]
+      ],
+      "x_mitre_attack_spec_version": "3.2.0",
+      "x_mitre_deprecated": false,
+      "x_mitre_domains": [
+        "enterprise-attack"
+      ],
+      "x_mitre_is_subtechnique": true,
+      "x_mitre_modified_by_ref": "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
+      "x_mitre_platforms": [
+        "Windows"
+      ],
+      "x_mitre_version": "1.2"
     },
     {
       "id": "x-oca-behavior--aefb3377-95bd-4cf9-984a-f804f809409a",
@@ -389,7 +419,7 @@
       "spec_version": "2.1",
       "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
       "created": "2025-01-30T20:00:00.000Z",
-      "modified": "2025-01-30T20:00:00.000Z",
+      "modified": "2026-05-29T20:00:00.000Z",
       "revoked": false,
       "confidence": 0,
       "lang": "en",
@@ -397,12 +427,12 @@
       "description": "Loading of the Powerview Recon module",
       "behavior_class": "anomalous",
       "tactic": "Execution",
-      "technique": "T1059.001 - Command and Scripting Interpreter - PowerShell",
+      "technique": "T1018 - Remote System Discovery\"l",
       "first_seen": "2022-03-31T13:00:00.000Z",
       "platforms": [
         {
           "operating_system": "Microsoft Windows",
-          "version": "10"
+          "version": "11"
         }
       ],
       "extensions": {
@@ -425,7 +455,7 @@
       "description": "Adversary extracts the ntds.dit file, which contains Active Directory data",
       "behavior_class": "anomalous",
       "tactic": "Credential Access",
-      "technique": "T1555 - Credentials from Password Stores",
+      "technique": "T1003.003 - OS Credential Dumping: NTDS",
       "first_seen": "2022-03-31T13:00:00.000Z",
       "platforms": [
         {
@@ -454,15 +484,15 @@
       "spec_version": "2.1",
       "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
       "created": "2024-11-14T15:00:00.000Z",
-      "modified": "2024-11-14T15:00:00.000Z",
+      "modified": "2026-06-12T15:00:00.000Z",
       "revoked": false,
       "confidence": 0,
       "lang": "en",
       "name": "Log Deletion",
       "description": "Windows Event Logs cleared to hide the activity of an intrusion",
       "behavior_class": "anomalous",
-      "tactic": "Defense Evasion",
-      "technique": "T1070.001 - Indicator Removal - Clear Windows Event Logs",
+      "tactic": "Defense Impairment",
+      "technique": "T1685.005 - Disable or Modify Tools: Clear Windows Event Logs",
       "first_seen": "2022-03-31T13:00:00.000Z",
       "platforms": [
         {
@@ -510,7 +540,7 @@
       "spec_version": "2.1",
       "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
       "created": "2024-10-30T18:00:00.000Z",
-      "modified": "2024-10-30T18:00:00.000Z",
+      "modified": "2026-05-21T19:30:00.000Z",
       "revoked": false,
       "confidence": 0,
       "lang": "en",
@@ -518,7 +548,7 @@
       "description": "Process causing computer to dump hashes with lsass",
       "analytic": {
         "type": "Sigma Rule - base64 encoded YAML file",
-        "rule": "dGl0bGU6IENvbXB1dGVyIGdlbmVyYXRpbmcgaGFzaGVzCmlkOiAxQzJCMEYzMS02NEYzLTRCNEEtQTBGNi1DQ0ZERkYyRTk4Q0QKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IFByb2Nlc3MgY2F1c2luZyBjb21wdXRlciB0byBkdW1wIGhhc2hlcyB3aXRoIGxzYXNzCnJlZmVyZW5jZXM6IGh0dHBzOi8vYXR0YWNrLm1pdHJlLm9yZy90ZWNobmlxdWVzL1QxMDAzLzAwMS8KYXV0aG9yOiBPQ0EKZGF0ZTogMjAyNC8xMC8yMQptb2RpZmllZDogMjAyNC8xMC8yMQp0YWdzOgogICAgLSBhdHRhY2sudDEwMzMuMDAxCiAgICAtIGF0dGFjay5leGVjdXRpb24KbG9nc291cmNlOgogICAgY2F0ZWdvcnk6IHByb2Nlc3NfY3JlYXRpb24KICAgIHByb2R1Y3Q6IHdpbmRvd3MKZGV0ZWN0aW9uOgogICAgc2VsZWN0aW9uXzE6CiAgICAgICAgZXZlbnQuY29kZTogOAogICAgc2VsZWN0aW9uXzI6CiAgICAgICAgd2lubG9nLmV2ZW50X2RhdGEuVGFyZ2V0SW1hZ2U6ICcqbHNhc3MqJwogICAgY29uZGl0aW9uOiBzZWxlY3Rpb25fMSBhbmQgc2VsZWN0aW9uXzIKZmFsc2Vwb3NpdGl2ZXM6CiAgICAtIExlZ2l0aW1hdGUgbHNhc3MgdXNhZ2UKbGV2ZWw6IGhpZ2g="
+        "rule": "dGl0bGU6IENvbXB1dGVyIGdlbmVyYXRpbmcgaGFzaGVzCmlkOiA5OTUyOTA5Mi0zY2U2LTQ5M2MtODZmYS04N2ZhMDMyZmNhODYKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IFByb2Nlc3MgY2F1c2luZyBjb21wdXRlciB0byBkdW1wIGhhc2hlcyB3aXRoIGxzYXNzCnJlZmVyZW5jZXM6CiAgICAtIGh0dHBzOi8vYXR0YWNrLm1pdHJlLm9yZy90ZWNobmlxdWVzL1QxMDAzLzAwMS8KYXV0aG9yOiBPQ0EKZGF0ZTogMjAyNC8xMC8yMQptb2RpZmllZDogMjAyNi8wNS8yMQp0YWdzOgogICAgLSBhdHRhY2sudDEwMDMuMDAxCiAgICAtIGF0dGFjay5jcmVkZW50aWFsX2FjY2Vzcwpsb2dzb3VyY2U6CiAgICBjYXRlZ29yeTogQ3JlYXRlUmVtb3RlVGhyZWFkCiAgICBzZXJ2aWNlOiBzeXNtb24KICAgIHByb2R1Y3Q6IHdpbmRvd3MKZGV0ZWN0aW9uOgogICAgc2VsZWN0aW9uXzE6CiAgICAgICAgRXZlbnRDb2RlOiA4CiAgICBzZWxlY3Rpb25fMjoKICAgICAgICBUYXJnZXRJbWFnZTogJypsc2FzcyonCiAgICBjb25kaXRpb246IHNlbGVjdGlvbl8xIGFuZCBzZWxlY3Rpb25fMgpmYWxzZXBvc2l0aXZlczoKICAgIC0gTGVnaXRpbWF0ZSBsc2FzcyB1c2FnZQpsZXZlbDogaGlnaAo="
       },
       "extensions": {
         "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
@@ -532,7 +562,7 @@
       "spec_version": "2.1",
       "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
       "created": "2024-10-30T18:00:00.000Z",
-      "modified": "2024-10-30T18:00:00.000Z",
+      "modified": "2026-05-29T18:00:00.000Z",
       "revoked": false,
       "confidence": 0,
       "lang": "en",
@@ -540,7 +570,7 @@
       "description": "Powersploit usage to enumerate network",
       "analytic": {
         "type": "Sigma Rule - base64 encoded YAML file",
-        "rule": "dGl0bGU6IENvbW1hbmQgYW5kIFNjcmlwdGluZyBJbnRlcnByZXRlciAtIFBvd2VyU2hlbGwgUG93ZXJzcGxvaXQKaWQ6IHQ0MmtuNW04LTl2N3ItNTEwMi0zODQxLXAzajFyMjZiOTB3MgpzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogUG93ZXJzcGxvaXQgdXNhZ2UgdG8gZW51bWVyYXRlIG5ldHdvcmsKcmVmZXJlbmNlczogaHR0cHM6Ly9hdHRhY2subWl0cmUub3JnL3RlY2huaXF1ZXMvVDEwNTkvMDAxLwphdXRob3I6IE9DQQpkYXRlOiAyMDI0LzEwLzE3Cm1vZGlmaWVkOiAyMDI0LzEwLzE3CnRhZ3M6CiAgICAtIGF0dGFjay50MTA1OS4wMDEKICAgIC0gYXR0YWNrLmV4ZWN1dGlvbgpsb2dzb3VyY2U6CiAgICBjYXRlZ29yeTogcHJvY2Vzc19jcmVhdGlvbgogICAgcHJvZHVjdDogd2luZG93cwpkZXRlY3Rpb246CiAgICBzZWxlY3Rpb25fMToKICAgICAgICBldmVudC5jb2RlOiA0MTA0CiAgICBzZWxlY3Rpb25fMjoKICAgICAgICB3aW5sb2cuZXZlbnRfZGF0YS5TY3JpcHRCbG9ja1RleHQ6ICcqR2V0LURvbWFpbkNvbXB1dGVyKicKICAgIHNlbGVjdGlvbl8zOgogICAgICAgIHdpbmxvZy5ldmVudF9kYXRhLlNjcmlwdEJsb2NrVGV4dDogJypHZXQtTmV0Q29tcHV0ZXIqJwogICAgY29uZGl0aW9uOiBzZWxlY3Rpb25fMSBhbmQgc2VsZWN0aW9uXzIgYW5kIHNlbGVjdGlvbl8zCmZhbHNlcG9zaXRpdmVzOgogICAgLSBMZWdpdGltYXRlIHBvd2Vyc2hlbGwgc2NyaXB0cwpsZXZlbDogaGlnaA=="
+        "rule": "dGl0bGU6IENvbW1hbmQgYW5kIFNjcmlwdGluZyBJbnRlcnByZXRlciAtIFBvd2VyU2hlbGwgUG93ZXJzcGxvaXQKaWQ6IGU4N2U3NTc0LWU2YWEtNDFhMy04NWUyLTg2MDZhNWIyNjRjMgpzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogUG93ZXJzcGxvaXQgdXNhZ2UgdG8gZW51bWVyYXRlIG5ldHdvcmsKcmVmZXJlbmNlczoKICAgICAtIGh0dHBzOi8vYXR0YWNrLm1pdHJlLm9yZy90ZWNobmlxdWVzL1QxMDE4LwphdXRob3I6IE9DQQpkYXRlOiAyMDI0LzEwLzE3Cm1vZGlmaWVkOiAyMDI2LzA1LzI5CnRhZ3M6CiAgICAtIGF0dGFjay50MTAxOAogICAgLSBhdHRhY2suZGlzY292ZXJ5CmxvZ3NvdXJjZToKICAgIGNhdGVnb3J5OiBwc19zY3JpcHQKICAgIHByb2R1Y3Q6IHdpbmRvd3MKICAgIHNlcnZpY2U6IHBvd2Vyc2hlbGwKZGV0ZWN0aW9uOgogICAgc2VsZWN0aW9uXzE6CiAgICAgICAgRXZlbnRDb2RlOiA0MTA0CiAgICBzZWxlY3Rpb25fMjoKICAgICAgICBTY3JpcHRCbG9ja1RleHQ6ICcqR2V0LURvbWFpbkNvbXB1dGVyKicKICAgIHNlbGVjdGlvbl8zOgogICAgICAgIFNjcmlwdEJsb2NrVGV4dDogJypHZXQtTmV0Q29tcHV0ZXIqJwogICAgY29uZGl0aW9uOiBzZWxlY3Rpb25fMSBhbmQgKHNlbGVjdGlvbl8yIG9yIHNlbGVjdGlvbl8zKQpmYWxzZXBvc2l0aXZlczoKICAgIC0gTGVnaXRpbWF0ZSBwb3dlcnNoZWxsIHNjcmlwdHMKbGV2ZWw6IGhpZ2gK"
       },
       "extensions": {
         "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
@@ -554,7 +584,7 @@
       "spec_version": "2.1",
       "created_by_ref": "identity--b085a68a-bf48-4316-9667-37af78cba894",
       "created": "2024-11-06T17:00:00.000Z",
-      "modified": "2024-11-06T17:00:00.000Z",
+      "modified": "2026-05-14T14:30:00.000Z",
       "revoked": false,
       "confidence": 0,
       "lang": "en",
@@ -562,7 +592,7 @@
       "description": "credentials sought to perform lateral movement and access restricted information privileges",
       "analytic": {
         "type": "Sigma Rule - base64 encoded YAML file",
-        "rule": "dGl0bGU6IENyZWRlbnRpYWxzIGZyb20gUGFzc3dvcmQgU3RvcmVzCmlkOiBxMzRucDZrNy0ybTlyLTc1MDEtMTg0Mi14MXYxajU3YjA5dDMKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IGNyZWRlbnRpYWxzIHNvdWdodCB0byBwZXJmb3JtIGxhdGVyYWwgbW92ZW1lbnQgYW5kIGFjY2VzcyByZXN0cmljdGVkIGluZm9ybWF0aW9uIHByaXZpbGVnZXMKcmVmZXJlbmNlczogaGh0dHBzOi8vYXR0YWNrLm1pdHJlLm9yZy90ZWNobmlxdWVzL1QxNTU1LwphdXRob3I6IE9DQQpkYXRlOiAyMDI0LzEwLzIzCm1vZGlmaWVkOiAyMDI0LzEwLzIzCnRhZ3M6CiAgICAtIGF0dGFjay50MTU1NQogICAgLSBhdHRhY2suY3JlZGVudGlhbF9hY2Nlc3MKbG9nc291cmNlOgogICAgY2F0ZWdvcnk6IHByb2Nlc3NfY3JlYXRpb24KICAgIHByb2R1Y3Q6IHdpbmRvd3MKZGV0ZWN0aW9uOgogICAgc2VsZWN0aW9uOgogICAgICAgIGV2ZW50LmNvZGU6IDMyNQogICAgICAgIG1lc3NhZ2U6ICcqbnRkcy5kaXQqJwogICAgY29uZGl0aW9uOiBzZWxlY3Rpb24KZmFsc2Vwb3NpdGl2ZXM6CiAgICAtIGxlZ2l0aW1hdGUgdG9rZW4KbGV2ZWw6IGhpZ2g="
+        "rule": "dGl0bGU6IENyZWRlbnRpYWxzIGZyb20gUGFzc3dvcmQgU3RvcmVzCmlkOiBlNjhjZDNhZi01ZTAyLTQ1MjktOTE2YS02ZWVjOTFmZTYyNjIKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IGNyZWRlbnRpYWxzIHNvdWdodCB0byBwZXJmb3JtIGxhdGVyYWwgbW92ZW1lbnQgYW5kIGFjY2VzcyByZXN0cmljdGVkIGluZm9ybWF0aW9uIHByaXZpbGVnZXMKcmVmZXJlbmNlczoKICAgIC0gaHR0cHM6Ly9hdHRhY2subWl0cmUub3JnL3RlY2huaXF1ZXMvVDEwMDMvMDAzLwphdXRob3I6IE9DQQpkYXRlOiAyMDI0LzEwLzIzCm1vZGlmaWVkOiAyMDI2LzA1LzA4CnRhZ3M6CiAgICAtIGF0dGFjay50MTAwMy4wMDMKICAgIC0gYXR0YWNrLmNyZWRlbnRpYWxfYWNjZXNzCmxvZ3NvdXJjZToKICAgIHByb2R1Y3Q6IHdpbmRvd3MKICAgIHNlcnZpY2U6IGFwcGxpY2F0aW9uCmRldGVjdGlvbjoKICAgIHNlbGVjdGlvbjoKICAgICAgICBFdmVudENvZGU6IDMyNQogICAgICAgICMgc2VhcmNoIGZvciBwYXR0ZXJuIGluIGV2ZW50IGRhdGEKICAgICAgICBtZXNzYWdlOiAnKm50ZHMuZGl0KicKICAgIGNvbmRpdGlvbjogc2VsZWN0aW9uCmZhbHNlcG9zaXRpdmVzOgogICAgLSBsZWdpdGltYXRlIHRva2VuCmxldmVsOiBoaWdo"
       },
       "extensions": {
         "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
@@ -584,7 +614,7 @@
       "description": "Windows Event Logs cleared to hide the activity of an intrusion",
       "analytic": {
         "type": "Sigma Rule - base64 encoded YAML file",
-        "rule": "dGl0bGU6IEluZGljYXRvciBSZW1vdmFsIC0gQ2xlYXIgV2luZG93cyBFdmVudCBMb2dzCmlkOiBtNThrcDJqNC03djNoLTkxMDItNjUyMS1wNGIxbjM5dDA2ZDEKc3RhdHVzOiBleHBlcmltZW50YWwKZGVzY3JpcHRpb246IFdpbmRvd3MgRXZlbnQgTG9ncyBjbGVhcmVkIHRvIGhpZGUgdGhlIGFjdGl2aXR5IG9mIGFuIGludHJ1c2lvbgpyZWZlcmVuY2VzOiBodHRwczovL2F0dGFjay5taXRyZS5vcmcvdGVjaG5pcXVlcy9UMTA3MC8wMDEvCmF1dGhvcjogT0NBCmRhdGU6IDIwMjQvMTAvMjMKbW9kaWZpZWQ6IDIwMjQvMTAvMjMKdGFnczoKICAgIC0gYXR0YWNrLnQxMDcwLjAwMQogICAgLSBhdHRhY2suZGVmZW5zZV9ldmFzaW9uCmxvZ3NvdXJjZToKICAgIGNhdGVnb3J5OiBwcm9jZXNzX2NyZWF0aW9uCiAgICBwcm9kdWN0OiB3aW5kb3dzCmRldGVjdGlvbjoKICAgIHNlbGVjdGlvbl8xOgogICAgICAgIGV2ZW50LmNvZGU6IDEKICAgIHNlbGVjdGlvbl8yOgogICAgICAgIHdpbmxvZy5ldmVudF9kYXRhLkNvbW1hbmRMaW5lLmtleXdvcmQ6IOKAnSp3ZXZ0dXRpbCoiCiAgICBzZWxlY3Rpb25fMzoKICAgICAgICB3aW5sb2cuZXZlbnRfZGF0YS5Db21tYW5kTGluZS5rZXl3b3JkOiAiKmNsKiIKICAgIGNvbmRpdGlvbjogYWxsIG9mIHNlbGVjdGlvbl8qCmZhbHNlcG9zaXRpdmVzOgogICAgLSBsZWdpdGltYXRlIGFkbWluaXN0cmF0b3IgYWN0aXZpdHkKbGV2ZWw6IGhpZ2g="
+        "rule": "dGl0bGU6IENsZWFyIFdpbmRvd3MgRXZlbnQgTG9ncwppZDogMTE3MzU0ODEtNjhkOS00OGY5LTg1MzAtNGU2NzMyMDU5MWE1CnN0YXR1czogZXhwZXJpbWVudGFsCmRlc2NyaXB0aW9uOiBXaW5kb3dzIEV2ZW50IExvZ3MgY2xlYXJlZCB0byBoaWRlIHRoZSBhY3Rpdml0eSBvZiBhbiBpbnRydXNpb24KcmVmZXJlbmNlczoKICAgICAtIGh0dHBzOi8vYXR0YWNrLm1pdHJlLm9yZy90ZWNobmlxdWVzL1QxNjg1LzAwNS8KYXV0aG9yOiBPQ0EKZGF0ZTogMjAyNC8xMC8yMwptb2RpZmllZDogMjAyNi8wNi8wOQp0YWdzOgogICAgLSBhdHRhY2sudDE2ODUuMDA1CiAgICAtIGF0dGFjay5kZWZlbnNlX2ltcGFpcm1lbnQKbG9nc291cmNlOgogICAgY2F0ZWdvcnk6IHByb2Nlc3NfY3JlYXRpb24KICAgIHByb2R1Y3Q6IHdpbmRvd3MKICAgIHNlcnZpY2U6IHN5c21vbgpkZXRlY3Rpb246CiAgICBzZWxlY3Rpb25fMToKICAgICAgICBFdmVudENvZGU6IDEKICAgIHNlbGVjdGlvbl8yOgogICAgICAgIENvbW1hbmRMaW5lOiAiKndldnR1dGlsKiIKICAgIHNlbGVjdGlvbl8zOgogICAgICAgIENvbW1hbmRMaW5lOiAiKmNsKiIKICAgIGNvbmRpdGlvbjogYWxsIG9mIHNlbGVjdGlvbl8qCmZhbHNlcG9zaXRpdmVzOgogICAgLSBsZWdpdGltYXRlIGFkbWluaXN0cmF0b3IgYWN0aXZpdHkKbGV2ZWw6IGhpZ2g="
       },
       "extensions": {
         "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
@@ -665,9 +695,9 @@
         "identity--c78cb6e5-0c4b-4611-8297-d1b8b55e40b5",
         "identity--b085a68a-bf48-4316-9667-37af78cba894",
         "attack-pattern--65f2d882-3f41-4d48-8a06-29af77ec9f90",
-        "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
-        "attack-pattern--3fc9b85a-2862-4363-a64d-d692e3ffbee0",
-        "attack-pattern--6495ae23-3ab4-43c5-a94f-5638a2c31fd2",
+        "attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735",
+        "attack-pattern--edf91964-b26e-4b4a-9600-ccacd7d7df24",
+        "attack-pattern--75b9a4d2-d4e2-4ca1-9aab-1badd9e05fd0",
         "x-oca-behavior--b4eb6b07-787a-49d3-9677-fedef58d8342",
         "x-oca-behavior--B63470F0-0BC7-467E-BE25-08F5FBFC0415",
         "x-oca-behavior--8858A2BD-5729-4EF1-9932-3E3CC7FEFF99",
@@ -783,7 +813,7 @@
       "description": "This detection looks for winrshost.exe running commands with cmd.exe or powershell",
       "analytic": {
         "type": "Sigma Rule - base64 encoded YAML file",
-        "rule": "dGl0bGU6IFdpbnJzIHJ1bm5pbmcgY29tbWFuZHMKaWQ6IDIxNWJjMWVkLWNmNmItNGFmOC04ZmJlLTk3OWFlY2E5N2M2ZApzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogVGhpcyBkZXRlY3Rpb24gbG9va3MgZm9yIHdpbnJzaG9zdC5leGUgcnVubmluZyBjb21tYW5kcyB3aXRoIGNtZC5leGUgb3IgcG93ZXJzaGVsbApyZWZlcmVuY2VzOiBodHRwczovL2F0dGFjay5taXRyZS5vcmcvdGVjaG5pcXVlcy9UMTAyMS8wMDYvCmF1dGhvcjogSkhVQVBMCmRhdGU6IDIwMjUvMDMvMDYKbW9kaWZpZWQ6IDIwMjUvMDMvMDYKdGFnczoKICAgIC0gYXR0YWNrLnQxMDIxLjAwNgogICAgLSBhdHRhY2suZXhlY3V0aW9uCmxvZ3NvdXJjZToKICAgIGNhdGVnb3J5OiBwcm9jZXNzCiAgICBwcm9kdWN0OiB3aW5kb3dzCmRldGVjdGlvbjoKICAgIHNlbGVjdGlvbl8xOgogICAgICAgIEV2ZW50Q29kZTogNDY4OAogICAgc2VsZWN0aW9uXzI6CiAgICAgICAgcGFyZW50X3Byb2Nlc3NfbmFtZTogIndpbnJzaG9zdC5leGUiCiAgICBzZWxlY3Rpb25fMzoKICAgICAgICBwcm9jZXNzX25hbWU6CiAgICAgICAgICAgIC0gImNtZC5leGUiCiAgICAgICAgICAgIC0gIipwb3dlcnNoZWxsKiIKICAgIGNvbmRpdGlvbjogc2VsZWN0aW9uXzEgYW5kIHNlbGVjdGlvbl8yIGFuZCBzZWxlY3Rpb25fMwpmYWxzZXBvc2l0aXZlczoKICAgIC0gbGVnaXRpbWF0ZSBhZG1pbmlzdHJhdG9yIGFjdGl2aXR5CmxldmVsOiBoaWdoCg=="
+        "rule": "dGl0bGU6IFdpbnJzIHJ1bm5pbmcgY29tbWFuZHMKaWQ6IGE4MTEzMGMwLTIxZTctNDNmOC1hNzA1LTRkNzc1OWZlYjM1MApzdGF0dXM6IGV4cGVyaW1lbnRhbApkZXNjcmlwdGlvbjogVGhpcyBkZXRlY3Rpb24gbG9va3MgZm9yIHdpbnJzaG9zdC5leGUgcnVubmluZyBjb21tYW5kcyB3aXRoIGNtZC5leGUgb3IgcG93ZXJzaGVsbApyZWZlcmVuY2VzOiAKICAgIC0gaHR0cHM6Ly9hdHRhY2subWl0cmUub3JnL3RlY2huaXF1ZXMvVDEwMjEvMDA2LwphdXRob3I6IEpIVUFQTApkYXRlOiAyMDI1LzAzLzA2Cm1vZGlmaWVkOiAyMDI2LzA2LzExCnRhZ3M6CiAgICAtIGF0dGFjay50MTAyMS4wMDYKICAgIC0gYXR0YWNrLmxhdGVyYWxfbW92ZW1lbnQKbG9nc291cmNlOgogICAgY2F0ZWdvcnk6IHByb2Nlc3NfY3JlYXRpb24KICAgIHByb2R1Y3Q6IHdpbmRvd3MKZGV0ZWN0aW9uOgogICAgc2VsZWN0aW9uXzE6CiAgICAgICAgRXZlbnRDb2RlOiA0Njg4CiAgICBzZWxlY3Rpb25fMjoKICAgICAgICBwYXJlbnRfcHJvY2Vzc19uYW1lOiAid2lucnNob3N0LmV4ZSIKICAgIHNlbGVjdGlvbl8zOgogICAgICAgIHByb2Nlc3NfbmFtZToKICAgICAgICAgICAgLSAiY21kLmV4ZSIKICAgICAgICAgICAgLSAiKnBvd2Vyc2hlbGwqIgogICAgY29uZGl0aW9uOiBzZWxlY3Rpb25fMSBhbmQgc2VsZWN0aW9uXzIgYW5kIHNlbGVjdGlvbl8zCmZhbHNlcG9zaXRpdmVzOgogICAgLSBsZWdpdGltYXRlIGFkbWluaXN0cmF0b3IgYWN0aXZpdHkKbGV2ZWw6IGhpZ2g="
       },
       "extensions": {
         "extension-definition--c4690e13-107e-4796-8158-0dcf1ae7bc89": {
@@ -829,7 +859,7 @@
     {
       "id": "relationship--59012eb2-7e7d-4154-afa0-173b32bfeb1a",
       "source_ref": "x-oca-behavior--8858a2bd-5729-4ef1-9932-3e3cc7feff99",
-      "target_ref": "attack-pattern--970a3432-3237-47ad-bcca-7d8cbb217736",
+      "target_ref": "attack-pattern--e358d692-23c0-4a31-9eb6-ecc13a8d7735",
       "relationship_type": "uses",
       "type": "relationship",
       "spec_version": "2.1",
@@ -839,7 +869,7 @@
     {
       "id": "relationship--671d5d41-e094-4be9-ac67-15b7eaac2578",
       "source_ref": "x-oca-behavior--b63470f0-0bc7-467e-be25-08f5fbfc0415",
-      "target_ref": "attack-pattern--3fc9b85a-2862-4363-a64d-d692e3ffbee0",
+      "target_ref": "attack-pattern--edf91964-b26e-4b4a-9600-ccacd7d7df24",
       "relationship_type": "uses",
       "type": "relationship",
       "spec_version": "2.1",
@@ -849,7 +879,7 @@
     {
       "id": "relationship--0a83195d-b41d-4010-a259-5995932e956e",
       "source_ref": "x-oca-behavior--b4eb6b07-787a-49d3-9677-fedef58d8342",
-      "target_ref": "attack-pattern--6495ae23-3ab4-43c5-a94f-5638a2c31fd2",
+      "target_ref": "attack-pattern--75b9a4d2-d4e2-4ca1-9aab-1badd9e05fd0",
       "relationship_type": "uses",
       "type": "relationship",
       "spec_version": "2.1",
@@ -945,7 +975,7 @@
       "created": "2025-03-05T13:18:13.282Z",
       "modified": "2025-03-05T13:18:13.284Z",
       "relationship_type": "uses"
-      
+
     },
     {
       "id": "relationship--36a08c58-4cef-4fdf-868a-3fd36cdd2eb4",
