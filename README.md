@@ -7,7 +7,7 @@ An overview of the Sub-Project is available [here](https://github.com/opencybers
 
 The IOB WG charter is available [here](https://github.com/opencybersecurityalliance/oca-iob/blob/main/charter.md).
 
-Documentation for STIX 2.1 complaint IOB objects is available in the OCA STIX extensions repository [here](https://github.com/opencybersecurityalliance/stix-extensions/tree/main/2.x).
+Documentation for STIX 2.1 complaint IOB objects including the relevant schema is available in the OCA STIX extensions repository [here](https://github.com/opencybersecurityalliance/stix-extensions/tree/main/contexts/indicator-of-behavior).
 
 A fork of the STIX Modeler that supports the creation and visualization of IOB STIX objects is available [here](https://github.com/JHUAPL/STIXMODELER_UI).
 
